@@ -99,7 +99,10 @@ class ProcurementController extends Controller
 
     public function exportExcel()
     {
-        return Excel::download(new ProcurementExport, 'procurements_' . date('Ymdhis') . '.xlsx');
+        $procurement = $this->service->allProcurementWithItems();
+        $fileName = 'Procurement_' . now()->format('Ymdhis') . '.xlsx';
+        return Excel::download(new ProcurementExport($procurement), $fileName);
+        
     }
 
     public function exportSingle($id)

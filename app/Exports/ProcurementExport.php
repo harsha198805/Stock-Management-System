@@ -2,29 +2,22 @@
 
 namespace App\Exports;
 
-use App\Models\Procurement;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadings;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class ProcurementExport implements FromCollection, WithHeadings
+class ProcurementExport implements FromView
 {
-    public function collection()
+    protected $procurements;
+
+    public function __construct($procurements)
     {
-        return Procurement::withCount('items')
-            ->select('reference_no', 'procurement_date', 'status')
-            ->get()
-            ->map(function ($proc) {
-                return [
-                    $proc->reference_no,
-                    $proc->procurement_date,
-                    ucfirst($proc->status),
-                    $proc->items_count,
-                ];
-            });
+        $this->procurements = $procurements;
     }
 
-    public function headings(): array
+    public function view(): View
     {
-        return ['Reference No', 'Date', 'Status', 'Total Items'];
+        return view('exports.excel.procurements', [
+            'procurements' => $this->procurements
+        ]);
     }
 }

@@ -12,4 +12,5 @@ interface ProcurementRepositoryInterface
     public function searchAndPaginate(?string $search = null, int $perPage = 10, $status = null, $startDate = null, $endDate = null);
     public function getAllSuppliers();
     public function getAllStockItem();
+    public function allProcurementWithItems();
 }

@@ -14,6 +14,10 @@ class ProcurementRepository implements ProcurementRepositoryInterface
     {
         return Procurement::with('items.stockItem', 'supplier')->paginate($perPage);
     }
+    public function allProcurementWithItems()
+    {
+        return Procurement::with('items.stockItem', 'supplier')->get();
+    }
 
     public function createProcurement(array $data, array $items)
     {

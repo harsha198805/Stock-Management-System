@@ -51,4 +51,9 @@ class ProcurementService
     {
         return $this->repo->getAllStockItem();
     }
+
+    public function allProcurementWithItems()
+    {
+        return $this->repo->allProcurementWithItems();
+    }
 }
