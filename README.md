@@ -26,7 +26,7 @@ Laravel's built-in authentication system is used.
     Status,Customer name (search),Date range,Sort (ASC, DESC)
   - Auto-submitting filters using jQuery.
   - Reset Button clears filter query params.
-  - Color-coded status badges (e.g., Opened, Pending).
+  - Color-coded status badges (e.g., approved, pending).
   - Responsive tables using Bootstrap .table-responsive.
   - Audit Trail logs stock and procurement changes.
 
