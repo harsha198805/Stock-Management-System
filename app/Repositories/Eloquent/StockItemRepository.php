@@ -36,7 +36,7 @@ class StockItemRepository implements StockItemRepositoryInterface
         return StockItem::destroy($id);
     }
 
-    public function searchAndPaginate(?string $search = null, int $perPage = 10, $status = null, $startDate = null, $endDate = null)
+    public function searchAndPaginate(?string $search = null, $perPage = null, $status = null, $startDate = null, $endDate = null, $sort_by = 'created_at', $sort_dir = 'desc')
     {
         $query = StockItem::query();
 
@@ -57,6 +57,7 @@ class StockItemRepository implements StockItemRepositoryInterface
                 $query->whereDate('created_at', '<=', $endDate);
             });
 
-        return $query->orderBy('created_at', 'desc')->paginate($perPage);
+        $query->orderBy($sort_by, $sort_dir);
+        return !empty($perPage) ? $query->paginate($perPage) : $query->get();
     }
 }

@@ -33,9 +33,9 @@ class StockItemService
         return $this->stockRepo->delete($id);
     }
 
-    public function searchAndPaginate(?string $search = null, int $perPage = 10, $status = null, $startDate = null, $endDate = null)
+    public function searchAndPaginate(?string $search = null, $perPage = null, $status = null, $startDate = null, $endDate = null, $sort_by = null, $sort_dir = null)
     {
-        return $this->stockRepo->searchAndPaginate($search, $perPage, $status, $startDate, $endDate);
+        return $this->stockRepo->searchAndPaginate($search, $perPage, $status, $startDate, $endDate, $sort_by, $sort_dir);
     }
 
     public function find($id)

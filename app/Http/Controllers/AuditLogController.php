@@ -31,7 +31,10 @@ class AuditLogController extends Controller
             $query->where('auditable_type', 'like', '%' . $request->model . '%');
         }
 
-        $audits = $query->latest()->paginate(10);
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortDir = $request->get('sort_dir', 'desc');
+
+        $audits = $query->orderBy($sortBy, $sortDir)->paginate(10);
 
         return view('audits.index', compact('audits'));
     }

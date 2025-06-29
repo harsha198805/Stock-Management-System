@@ -9,7 +9,7 @@ interface ProcurementRepositoryInterface
     public function updateProcurement($id, array $data, array $items);
     public function findWithItems($id);
     public function delete($id);
-    public function searchAndPaginate(?string $search = null, int $perPage = 10, $status = null, $startDate = null, $endDate = null);
+    public function searchAndPaginate(?string $search = null, $perPage = null, $status = null, $startDate = null, $endDate = null, $sort_by = null, $sort_dir = null);
     public function getAllSuppliers();
     public function getAllStockItem();
     public function allProcurementWithItems();

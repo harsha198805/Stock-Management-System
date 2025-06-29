@@ -12,13 +12,20 @@
             <input type="date" name="end_date" class="form-control" value="{{ request('end_date') }}" placeholder="End Date">
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-1">
             <select name="event" id="event" class="form-select">
                 <option value="">All Events</option>
                 <option value="created" {{ request('event') == 'created' ? 'selected' : '' }}>Created</option>
                 <option value="updated" {{ request('event') == 'updated' ? 'selected' : '' }}>Updated</option>
                 <option value="deleted" {{ request('event') == 'deleted' ? 'selected' : '' }}>Deleted</option>
             </select>
+        </div> 
+
+        <div class="col-md-1">
+            <select name="sort_dir" id="sort_dir" class="form-select">
+                <option value="desc" {{ request('sort_dir') == 'desc' ? 'selected' : '' }}>Descending</option>
+                <option value="asc" {{ request('sort_dir') == 'asc' ? 'selected' : '' }}>Ascend</option>
+           </select>
         </div>
         
         <div class="col-md-2">
@@ -73,7 +80,7 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-        $('#event').on('change', function() {
+        $('#event, #sort_dir').on('change', function() {
             $(this).closest('form').submit();
         });
 

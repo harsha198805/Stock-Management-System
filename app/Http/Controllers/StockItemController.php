@@ -21,7 +21,10 @@ class StockItemController extends Controller
         $status = $request->input('status');
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
-        $items = $this->service->searchAndPaginate($search, $perPage = 10, $status, $startDate, $endDate);
+        $sort_by = $request->get('sort_by', 'created_at');
+        $sort_dir = $request->get('sort_dir', 'desc');
+
+        $items = $this->service->searchAndPaginate($search, $perPage = 10, $status, $startDate, $endDate, $sort_by, $sort_dir);
         return view('stock.index', compact('items', 'search', 'startDate', 'endDate', 'status'));
     }
 
@@ -79,7 +82,9 @@ class StockItemController extends Controller
         $status = $request->input('status');
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
-        $items = $this->service->searchAndPaginate($search, $perPage = 10, $status, $startDate, $endDate);
+        $sort_by = $request->get('sort_by', 'created_at');
+        $sort_dir = $request->get('sort_dir', 'desc');
+        $items = $this->service->searchAndPaginate($search, $perPage = null, $status, $startDate, $endDate, $sort_by, $sort_dir);
         return Excel::download(new StockItemsExport($items), 'stock_items_' . now()->format('Ymd_His') . '.xlsx');
     }
 

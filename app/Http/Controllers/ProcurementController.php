@@ -21,8 +21,10 @@ class ProcurementController extends Controller
         $status = $request->input('status');
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
+        $sort_by = $request->get('sort_by', 'created_at');
+        $sort_dir = $request->get('sort_dir', 'desc');
 
-        $procurements = $this->procurementService->searchAndPaginate($search, $perPage = 10, $status, $startDate, $endDate);
+        $procurements = $this->procurementService->searchAndPaginate($search, $perPage = 10, $status, $startDate, $endDate, $sort_by, $sort_dir);
 
         return view('procurements.index', compact('procurements', 'search', 'status', 'startDate', 'endDate'));
     }
@@ -98,9 +100,15 @@ class ProcurementController extends Controller
         return $pdf->download("procurements-{$procurement->reference_no}.pdf");
     }
 
-    public function exportExcel()
+    public function exportExcel(Request $request)
     {
-        $procurement = $this->procurementService->allProcurementWithItems();
+        $search = $request->input('search');
+        $status = $request->input('status');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $sort_by = $request->get('sort_by', 'created_at');
+        $sort_dir = $request->get('sort_dir', 'desc');
+        $procurement = $this->procurementService->searchAndPaginate($search, $perPage = null, $status, $startDate, $endDate, $sort_by, $sort_dir);
         $fileName = 'Procurement_' . now()->format('Ymdhis') . '.xlsx';
         return Excel::download(new ProcurementExport($procurement), $fileName);
     }

@@ -31,7 +31,15 @@
                 <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Out of Stock</option>
             </select>
         </div>
-        <div class="col-md-4">
+
+        <div class="col-md-1">
+            <select name="sort_dir" id="sort_dir" class="form-select">
+                <option value="desc" {{ request('sort_dir') == 'desc' ? 'selected' : '' }}>Descending</option>
+                <option value="asc" {{ request('sort_dir') == 'asc' ? 'selected' : '' }}>Ascend</option>
+           </select>
+        </div>
+
+        <div class="col-md-3">
             <input type="text" name="search" value="{{ $search }}" class="form-control" placeholder="Search by name or code">
         </div>
         <div class="col-md-1 d-grid">
@@ -110,7 +118,7 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-        $('#status').on('change', function() {
+        $('#status, #sort_dir').on('change', function() {
             $(this).closest('form').submit();
         });
 

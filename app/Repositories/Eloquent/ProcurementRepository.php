@@ -64,7 +64,7 @@ class ProcurementRepository implements ProcurementRepositoryInterface
         Procurement::destroy($id);
     }
 
-    public function searchAndPaginate(?string $search = null, int $perPage = 10, $status = null, $startDate = null, $endDate = null)
+    public function searchAndPaginate(?string $search = null, $perPage = null, $status = null, $startDate = null, $endDate = null, $sort_by = null, $sort_dir = null)
     {
         $query = Procurement::with('items.stockItem', 'supplier');
 
@@ -84,7 +84,8 @@ class ProcurementRepository implements ProcurementRepositoryInterface
             $query->whereDate('procurement_date', '<=', $endDate);
         }
 
-        return $query->orderBy('procurement_date', 'desc')->paginate($perPage);
+        $query->orderBy($sort_by, $sort_dir);
+        return !empty($perPage) ? $query->paginate($perPage) : $query->get();
     }
 
     public function getAllSuppliers()

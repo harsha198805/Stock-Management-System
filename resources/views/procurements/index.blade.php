@@ -5,7 +5,7 @@
     <h2>Procurements</h2>
 
     <a href="{{ route('procurements.create') }}" class="btn btn-primary mb-3">Add New Procurement</a>
-    <a href="{{ route('procurements.export.excel') }}" class="btn btn-success mb-3">Export to Excel</a>
+    <a href="{{ route('procurements.export.excel', request()->query()) }}" class="btn btn-success mb-3">Export to Excel</a>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -29,15 +29,22 @@
             </select>
         </div>
 
-            <div class="col-md-4">
+        <div class="col-md-1">
+            <select name="sort_dir" id="sort_dir" class="form-select">
+                <option value="desc" {{ request('sort_dir') == 'desc' ? 'selected' : '' }}>Descending</option>
+                <option value="asc" {{ request('sort_dir') == 'asc' ? 'selected' : '' }}>Ascend</option>
+           </select>
+        </div>
+
+            <div class="col-md-3">
             <input type="text" name="search" class="form-control" placeholder="Search by reference no" value="{{ request('search') }}">
         </div>
 
-        <div class="col-md-1">
+        <div class="col-md-1 d-grid">
             <button type="submit" class="btn btn-outline-secondary">Search</button>
         </div>
 
-        <div class="col-md-1">
+        <div class="col-md-1 d-grid">
             <a href="{{ route('procurements.index') }}" class="btn btn-outline-secondary">Reset</a>
         </div>
     </form>
@@ -103,7 +110,7 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-        $('#status').on('change', function() {
+        $('#status, #sort_dir').on('change', function() {
             $(this).closest('form').submit();
         });
 
