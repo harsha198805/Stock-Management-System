@@ -3,6 +3,7 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\StockItem;
+use App\Events\StockUpdated;
 use App\Repositories\Interfaces\StockItemRepositoryInterface;
 
 class StockItemRepository implements StockItemRepositoryInterface
@@ -24,9 +25,10 @@ class StockItemRepository implements StockItemRepositoryInterface
 
     public function update($id, array $data)
     {
-        $item = StockItem::findOrFail($id);
-        $item->update($data);
-        return $item;
+        $stockItem = StockItem::findOrFail($id);
+        $stockItem->update($data);
+        event(new StockUpdated($stockItem));
+        return $stockItem;
     }
 
     public function delete($id)

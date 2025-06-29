@@ -82,4 +82,10 @@ class StockItemController extends Controller
         $items = $this->service->searchAndPaginate($search, $perPage = 10, $status, $startDate, $endDate);
         return Excel::download(new StockItemsExport($items), 'stock_items_' . now()->format('Ymd_His') . '.xlsx');
     }
+
+    public function totalCount()
+{
+    $total = \App\Models\StockItem::sum('quantity');
+    return response()->json(['total' => $total]);
+}
 }

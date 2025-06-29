@@ -34,6 +34,30 @@
                 </div>
             </div>
         </div>
+
+        @if(auth()->user()->role === 'Admin')
+        <div class="col-md-4">
+            <div class="card text-white bg-dark h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Users</h5>
+                    <p class="display-4">{{ $userCount ?? '—' }}</p>
+                    <a href="{{ route('users.index') }}" class="btn btn-light btn-sm">Manage Users</a>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        @if(auth()->user()->role === 'Admin')
+        <div class="col-md-4">
+            <div class="card text-white bg-warning h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Audit Logs</h5>
+                    <p class="display-4">{{ $auditCount ?? '—' }}</p>
+                    <a href="{{ route('audits.index') }}" class="btn btn-light btn-sm">View Audit Logs</a>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 </div>
 @endsection

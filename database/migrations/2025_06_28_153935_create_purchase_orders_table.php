@@ -11,7 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchase_orders', function (Blueprint $table) {
             Schema::create('purchase_orders', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('procurement_id')->constrained()->onDelete('cascade');
@@ -19,7 +18,6 @@ return new class extends Migration
                 $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
                 $table->timestamps();
             });
-        });
     }
 
     /**

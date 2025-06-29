@@ -30,6 +30,11 @@
                         Manage Users
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('audits.*') ? 'active bg-success text-white' : '' }}" href="{{ route('audits.index') }}">
+                        Audits Reports
+                    </a>
+                </li>
             @endif
             <li class="nav-item">
                 <a class="nav-link text-danger" href="{{ route('logout') }}"

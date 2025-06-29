@@ -60,6 +60,35 @@
             "hideMethod": "fadeOut"
         };
     </script>
+@auth
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+<script src="https://unpkg.com/laravel-echo/dist/echo.iife.js"></script>
+
+<script>
+  window.Pusher = Pusher;
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: 'your-pusher-key',
+    cluster: 'your-cluster',
+    forceTLS: true
+});
+
+window.Echo.channel('stock-channel')
+    .listen('.StockUpdated', (e) => {
+        console.log('Stock Updated:', e);
+        // Update the UI accordingly
+        // For example:
+        const stockElem = document.querySelector(`#stock-quantity-${e.id}`);
+        if (stockElem) {
+            stockElem.textContent = e.quantity;
+        }
+
+        // Optional: show a toast notification
+        toastr.info(`Stock updated for ${e.name}: ${e.quantity}`);
+    });
+</script>
+@endauth
 </body>
 
 </html>

@@ -7,16 +7,18 @@ use App\Http\Controllers\ProcurementController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['register' => false]);
 Route::get('/', function () {
     return redirect()->route('login');
 });
-
+Route::get('/stock/total-count', [StockItemController::class, 'totalCount'])->name('api.stock.totalCount');
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::resource('users', UserController::class)->except(['show']);
+    Route::get('/audits', [AuditLogController::class, 'index'])->name('audits.index');
 });
 
  Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
