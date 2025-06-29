@@ -16,21 +16,19 @@ Laravel's built-in authentication system is used.
 
 # Features & Improvements
 
-Follows Service and Repository Pattern for clean, maintainable architecture.
-Custom `RoleMiddleware`** restricts access to staff and Manager-specific routes.
-Only users with the roles Admin or Manager are authorized to approve procurement requests.
-Upon approval, the system automatically generates a corresponding Purchase Order (PO) linked to the approved procurement.
-Role-based Access Control using Laravel middleware.
-Responsive Dashboard with proper Bootstrap navbar toggle for mobile.
-Advanced Filtering on data:
-  - Status
-  - Customer name (search)
-  - Date range
-Auto-submitting filters using jQuery.
-Reset Button clears filter query params.
-Color-coded status badges (e.g., Opened, Pending).
-Responsive tables using Bootstrap `.table-responsive`.
-Audit Trail logs stock and procurement changes.
+  - Follows Service and Repository Pattern for clean, maintainable architecture.
+  - Custom RoleMiddleware restricts access to staff and Manager-specific routes.
+  - Only users with the roles Admin or Manager are authorized to approve procurement requests.
+  - Upon approval, the system automatically generates a corresponding Purchase Order (PO) linked to the approved procurement.
+  - Role-based Access Control using Laravel middleware.
+  - Responsive Dashboard with proper Bootstrap navbar toggle for mobile.
+  - Advanced Filtering on data:
+    Status,Customer name (search),Date range,Sort (ASC, DESC)
+  - Auto-submitting filters using jQuery.
+  - Reset Button clears filter query params.
+  - Color-coded status badges (e.g., Opened, Pending).
+  - Responsive tables using Bootstrap .table-responsive.
+  - Audit Trail logs stock and procurement changes.
 
 
 ---
