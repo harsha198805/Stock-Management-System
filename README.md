@@ -28,8 +28,8 @@ Laravel's built-in authentication system is used.
 - ✅ **Reset Button** clears filter query params.
 - ✅ **Color-coded status badges** (e.g., Opened, Pending).
 - ✅ **Responsive tables** using Bootstrap `.table-responsive`.
-- ✅ **Audit Trail** logs stock and procurement changes.
-- ✅ **Real-Time Stock Updates** via Pusher and Laravel Echo.
+- ✅ **Audit Trail logs stock and procurement changes.
+
 
 ---
 
@@ -58,7 +58,7 @@ php artisan db:seed
 
 php artisan serve
 
-agent login link
+System login link
 
 http://127.0.0.1:8000/login
 
