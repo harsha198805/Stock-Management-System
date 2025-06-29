@@ -12,7 +12,7 @@ Only authenticated users with the appropriate role are allowed to access certain
 
 Laravel's built-in authentication system is used.
 
-  - Some UI screenshots of the system are included in the screenshots/ folder for reference.
+  - Some UI `screenshots` of the system are included in the `screenshots/` folder for reference.
 
 # Features & Improvements
 
