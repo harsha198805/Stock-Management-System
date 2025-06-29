@@ -23,7 +23,7 @@
 </head>
 <body>
 
-<h2>Purchase Order Details</h2>
+<h2>Procurement Order Details</h2>
 
 <p><strong>Reference No:</strong> {{ $procurement->reference_no }}</p>
 <p><strong>Procurement Date:</strong> {{ \Carbon\Carbon::parse($procurement->procurement_date)->format('d M Y') }}</p>

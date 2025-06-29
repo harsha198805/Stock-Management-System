@@ -4,7 +4,14 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Stock Item Management</h2>
-        <a href="{{ route('stock-items.create') }}" class="btn btn-primary">Add New Stock Item</a>
+        <div>
+            <a href="{{ route('stock-items.create') }}" class="btn btn-primary me-2">
+                Add New Stock Item
+            </a>
+            <a href="{{ route('stock-items.export.excel', request()->query()) }}" class="btn btn-success">
+                <i class="fa fa-file-excel-o"></i> Export to Excel
+            </a>
+        </div>
     </div>
 
     <form method="GET" action="{{ route('stock-items.index') }}" class="row g-2 mb-3">

@@ -23,7 +23,7 @@
 </head>
 <body>
 
-<h2>Purchase Order Details</h2>
+<h2>Procurement Order Details</h2>
 <h4>Items</h4>
 <table>
     <thead>

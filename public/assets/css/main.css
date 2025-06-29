@@ -13,5 +13,11 @@ body {
     background: #eff1f5;
     min-height: 100%;
     position: relative;
-    text-transform: capitalize;
+}
+
+.vh-100 {
+    height: 100vh;
+}
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
 }

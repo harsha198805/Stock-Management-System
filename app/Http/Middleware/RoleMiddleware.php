@@ -23,6 +23,7 @@ class RoleMiddleware
             return $next($request);
         }
 
-        return redirect()->route('dashboard')->with('error', 'Unauthorized access.');
+         return redirect()->route('dashboard')->with('error', 'Unauthorized access.');
+
     }
 }

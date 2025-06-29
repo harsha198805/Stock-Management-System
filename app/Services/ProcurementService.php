@@ -1,15 +1,19 @@
 <?php
+
 namespace App\Services;
 
 use App\Repositories\Interfaces\ProcurementRepositoryInterface;
+use App\Services\PurchaseOrderService;
 
 class ProcurementService
 {
     protected $repo;
+    protected $poService;
 
-    public function __construct(ProcurementRepositoryInterface $repo)
+    public function __construct(ProcurementRepositoryInterface $repo, PurchaseOrderService $poService)
     {
         $this->repo = $repo;
+        $this->poService = $poService;
     }
 
     public function getAllPaginated(int $perPage = 10)
@@ -46,7 +50,7 @@ class ProcurementService
     {
         return $this->repo->getAllSuppliers();
     }
-    
+
     public function getAllStockItem()
     {
         return $this->repo->getAllStockItem();
@@ -55,5 +59,16 @@ class ProcurementService
     public function allProcurementWithItems()
     {
         return $this->repo->allProcurementWithItems();
+    }
+
+    public function approveProcurement(int $id, int $userId)
+    {
+        $procurement = $this->repo->findWithItems($id);
+
+        if ($procurement->status !== 'approved') {
+            $this->repo->updateStatus($procurement, 'approved');
+        }
+
+        return $this->poService->generate($procurement, $userId);
     }
 }

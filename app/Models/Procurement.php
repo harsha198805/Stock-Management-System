@@ -25,4 +25,14 @@ class Procurement extends Model
     {
         return $this->belongsTo(Supplier::class);
     }
+
+    public function purchaseOrder()
+    {
+        return $this->hasOne(PurchaseOrder::class);
+    }
+
+    public function stockItems()
+{
+    return $this->hasMany(ProcurementItem::class);
+}
 }

@@ -1,12 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
-use App\Http\Controllers\Guest\TicketController;
-use App\Http\Controllers\Agent\AgentTicketController;
 use App\Http\Controllers\StockItemController;
 use App\Http\Controllers\ProcurementController;
+use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['register' => false]);
 Route::get('/', function () {
@@ -14,6 +15,11 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth', 'role:Admin'])->group(function () {
+    Route::resource('users', UserController::class)->except(['show']);
+});
+
+ Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::middleware(['role:Admin|Manager|Staff'])->group(function () {
         Route::get('stock-items', [StockItemController::class, 'index'])->name('stock-items.index');
@@ -23,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('stock-items/{stock_item}/edit', [StockItemController::class, 'edit'])->name('stock-items.edit');
         Route::put('stock-items/{stock_item}', [StockItemController::class, 'update'])->name('stock-items.update');
         Route::delete('stock-items/{stock_item}', [StockItemController::class, 'destroy'])->name('stock-items.destroy');
+        Route::get('/stock-items/export/excel', [StockItemController::class, 'export'])->name('stock-items.export.excel');
     });
 
 
@@ -36,38 +43,13 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('procurements/{procurement}', [ProcurementController::class, 'destroy'])->name('procurements.destroy');
         Route::get('/procurements/export/excel', [ProcurementController::class, 'exportExcel'])->name('procurements.export.excel');
         Route::get('procurements/{id}/export', [ProcurementController::class, 'exportSingle'])->name('procurements.export');
-
+        Route::put('/procurements/{id}/approve', [ProcurementController::class, 'approve'])->name('procurements.approve');
+        Route::get('/purchase-orders', [PurchaseOrderController::class, 'index'])->name('purchase-orders.index');
+        Route::get('/purchase-orders/{id}/pdf', [PurchaseOrderController::class, 'downloadPdf'])->name('purchase-orders.pdf');
     });
 
     Route::get('procurements/{id}/pdf', [ProcurementController::class, 'downloadSlip'])
         ->name('procurements.pdf')
         ->middleware('role:Admin|Manager|Staff');
 
-    Route::get('/admin/dashboard', function () {
-        return view('dashboard');
-    })->middleware('role:Admin')->name('admin.dashboard');
-
-    Route::get('/manager/dashboard', function () {
-        return view('dashboard');
-    })->middleware('role:Manager')->name('manager.dashboard');
-
-    Route::get('/staff/dashboard', function () {
-        return view('dashboard');
-    })->middleware('role:Staff')->name('staff.dashboard');
-
-
-    Route::get('/dashboard', function () {
-        $user = auth()->user();
-
-        switch ($user->role) {
-            case 'Admin':
-                return redirect()->route('admin.dashboard');
-            case 'Manager':
-                return redirect()->route('manager.dashboard');
-            case 'Staff':
-                return redirect()->route('staff.dashboard');
-            default:
-                abort(403, 'No dashboard available for your role.');
-        }
-    })->middleware('auth')->name('dashboard');
 });

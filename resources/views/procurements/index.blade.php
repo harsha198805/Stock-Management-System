@@ -38,7 +38,7 @@
         </div>
 
         <div class="col-md-1">
-            <a href="{{ route('procurements.index') }}" class="btn btn-secondary w-100">Reset</a>
+            <a href="{{ route('procurements.index') }}" class="btn btn-outline-secondary">Reset</a>
         </div>
     </form>
         @if($procurements->isEmpty())
@@ -61,14 +61,22 @@
                 <td>{{ $procurement->reference_no }}</td>
                 <td>{{ \Carbon\Carbon::parse($procurement->procurement_date)->format('Y-m-d') }}</td>
                 <td data-label="Status">
-                    @if($procurement->status === 'approved')
-                        <span class="badge bg-success">Approved</span>
-                    @elseif($procurement->status === 'pending')
-                        <span class="badge bg-warning text-dark">Pending</span>
-                    @elseif($procurement->status === 'rejected')
-                        <span class="badge bg-danger">Rejected</span>
+                    @if($procurement->status !== 'approved' && auth()->user()->role !== 'Staff')
+                        <form action="{{ route('procurements.approve', $procurement->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                        </form>
                     @else
-                        <span class="badge bg-secondary">Unknown</span>
+                        @if($procurement->status === 'approved')
+                            <span class="badge bg-success">Approved</span>
+                        @elseif($procurement->status === 'pending')
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        @elseif($procurement->status === 'rejected')
+                            <span class="badge bg-danger">Rejected</span>
+                        @else
+                            <span class="badge bg-secondary">Unknown</span>
+                        @endif
                     @endif
                 </td>
                 <td>{{ $procurement->items->count() }}</td>

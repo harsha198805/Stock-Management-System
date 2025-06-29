@@ -96,4 +96,15 @@ class ProcurementRepository implements ProcurementRepositoryInterface
     {
         return StockItem::all();
     }
+
+    public function findByIdWithItems(int $id)
+    {
+        return Procurement::with(['items.stockItem', 'purchaseOrder'])->findOrFail($id);
+    }
+
+    public function updateStatus($procurement, string $status): void
+    {
+        $procurement->status = $status;
+        $procurement->save();
+    }
 }

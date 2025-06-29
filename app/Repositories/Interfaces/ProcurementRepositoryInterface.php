@@ -13,4 +13,6 @@ interface ProcurementRepositoryInterface
     public function getAllSuppliers();
     public function getAllStockItem();
     public function allProcurementWithItems();
+    public function findByIdWithItems(int $id);
+    public function updateStatus($procurement, string $status): void;
 }

@@ -34,11 +34,11 @@ class LoginController extends Controller
         // Example: if you have a 'role' column in your users table
         switch ($user->role) {
             case 'Admin':
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('dashboard');
             case 'Manager':
-                return redirect()->route('manager.dashboard');
+                return redirect()->route('dashboard');
             case 'Staff':
-                return redirect()->route('staff.dashboard');
+                return redirect()->route('dashboard');
             default:
                 return redirect('/home');
         }

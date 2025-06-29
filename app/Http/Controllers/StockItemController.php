@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\StockItemService;
-use Illuminate\Support\Facades\Validator;
+use App\Exports\StockItemsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StockItemController extends Controller
 {
     public function __construct(private StockItemService $service)
     {
-        // $this->middleware('role:Admin|Manager');
+
     }
 
     public function index(Request $request)
@@ -20,8 +21,8 @@ class StockItemController extends Controller
         $status = $request->input('status');
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
-        $items = $this->service->searchAndPaginate($search,$perPage = 10, $status, $startDate, $endDate);
-        return view('stock.index', compact('items','search','startDate','endDate','status'));
+        $items = $this->service->searchAndPaginate($search, $perPage = 10, $status, $startDate, $endDate);
+        return view('stock.index', compact('items', 'search', 'startDate', 'endDate', 'status'));
     }
 
     public function create()
@@ -70,5 +71,15 @@ class StockItemController extends Controller
 
         $this->service->delete($id);
         return redirect()->route('stock-items.index')->with('success', 'Stock item deleted.');
+    }
+
+    public function export(Request $request)
+    {
+        $search = $request->input('search');
+        $status = $request->input('status');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $items = $this->service->searchAndPaginate($search, $perPage = 10, $status, $startDate, $endDate);
+        return Excel::download(new StockItemsExport($items), 'stock_items_' . now()->format('Ymd_His') . '.xlsx');
     }
 }

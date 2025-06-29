@@ -22,16 +22,25 @@
     <script src="{{ URL::to('assets/js/moment.js') }}"></script>
     <script src="{{ URL::to('assets/js/toastr.min.js') }}"></script>
 </head>
-
 <body>
     <div id="app">
         @include('layouts.navbar')
-        <main class="py-4">
-            @yield('content')
-            @include('layouts.toaster')
-        </main>
+
+        <div class="d-flex">
+            @auth
+                @include('layouts.slidbar')
+            @endauth
+            <div class="flex-grow-1 p-3" style="min-height: 100vh;">
+                <main>
+                    @yield('content')
+                    @include('layouts.toaster')
+                </main>
+            </div>
+        </div>
     </div>
+
     @stack('scripts')
+
     <script>
         toastr.options = {
             "closeButton": true,
